@@ -1,14 +1,22 @@
+import { useState, useEffect } from "react"
+
 import {NftAction} from "../actions/nftAction"
 
-function InfluencerMint() {
-    const nftAction = new NftAction()
+const nftAction = new NftAction()
+
+function InfluencerMint(props) {
+    const [amount, setAmount] = useState(0)
+
+    function inputHandler(e) {
+        setAmount(+e.target.value)
+    }
+
     function mintHandler() {
-        nftAction.setBaseURI()
+
     }
     return(
         <div>
-            Influencer : <input></input>
-            <br/>
+            Influencer : <input value={amount} onChange={inputHandler}></input>
             <button onClick={mintHandler}>mint</button>
         </div>
     )

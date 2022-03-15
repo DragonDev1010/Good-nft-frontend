@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 import Header from "./layout/header";
+import HolderMint from "./pages/holderMint";
+import AdminMint from "./pages/adminMint";
 import InfluencerMint from "./pages/influencerMint";
 
 function App() {
@@ -9,6 +11,8 @@ function App() {
 	return (
 		<div className="App">
 			<Header setAccount={setAccount}/>
+			<HolderMint currentAccount={account}/>
+			<AdminMint currentAccount = {account} />
 			<InfluencerMint/>
 		</div>
 	);
