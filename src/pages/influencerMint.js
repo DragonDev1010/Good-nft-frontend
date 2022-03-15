@@ -12,7 +12,8 @@ function InfluencerMint(props) {
     }
 
     function mintHandler() {
-
+        if(props.currentAccount != undefined)
+            nftAction.influencerMint(props.currentAccount, amount)
     }
     return(
         <div>
