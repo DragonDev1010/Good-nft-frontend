@@ -31,18 +31,30 @@ export class NftAction {
         // console.log("Whitelist Merkle Tree Root: ", root)
     }
 
-    usedStar = async() => {
-        let usedStars = []
-        usedStars = await this.nftContract.usedStar.call()
-        return usedStars
+    usedStarId = async(id) => {
+        // let t = await this.nftContract.mintPaused(1)
+        // console.log("test: ", t)
+        let used = await this.nftContract.usedStarIds(id)
+        console.log("used: ", used)
+        return used
     }
 
-    holderMint = async(ids) => {
-        await this.nftContract.holderMint(ids)
+    holderMint = async(wallet, ids) => {
+        let tx = await this.nftContract.holderMint(ids).send({from: wallet})
     }
     
+    getAdminMintedAmount = async() => {
+        let minted = await this.nftContract.adminMintedAmount.call()
+        return minted.toString()
+    }
+
     adminMint = async(wallets, amounts) => {
         await this.nftContract.adminMint([wallets], [amounts])
+    }
+
+    getInfluencerMintedAmount = async() => {
+        let minted = await this.nftContract.influencerMinteAmount.call()
+        return minted.toString()
     }
 
     influencerMint = async(wallet, amount) => {

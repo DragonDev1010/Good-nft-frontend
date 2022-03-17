@@ -4,6 +4,7 @@ import starHolders from "../data/starHolders.json"
 
 function HolderMint(props) {
     const [ownedStarIds, setOwnedStarIds] = useState([])
+    const [usedStarIds, setUsedStarIds] = useState([])
     const [enabledStarIds, setEnabledStarIds] = useState([])
     const [amount, setAmount] = useState(0)
 
@@ -13,12 +14,15 @@ function HolderMint(props) {
         setAmount(+e.target.value)
     }
 
-    function mintHandler() {
+    async function mintHandler() {
         let ids = []
         for ( let i = 0 ; i < amount ; i++ ) {
             ids.push(enabledStarIds[i])
         }
-        nftAction.holderMint(ids)
+        let tx
+        if(props.currentAccount != null)
+            tx = await nftAction.holderMint(props.currentAccount, ids)
+        console.log(tx)
     }
 
     function getOwnedStarIds() {
@@ -30,14 +34,21 @@ function HolderMint(props) {
         setOwnedStarIds(temp)
     }
 
-    function getEnableMintIds () {
-        let usedIds = [1,2,3]
+    async function getEnableMintIds () {
         let ids = []
         for ( let i = 0 ; i < ownedStarIds.length ; i++ ) {
-            if ( !usedIds.includes( ownedStarIds[i] ) )
+            let used = await nftAction.usedStarId(ownedStarIds[i])
+            if ( !used )
                 ids.push(ownedStarIds[i])
         }
         setEnabledStarIds(ids)
+    }
+
+    function arrayToString (arr) {
+        let str = ""
+        for(let i = 0 ; i < arr.length ; i++)
+            str += arr[i].toString() + " , "
+        return str
     }
 
     useEffect(() => {
@@ -52,7 +63,8 @@ function HolderMint(props) {
             Holder : <input value={amount} onChange={inputHandler}></input>
             <button onClick={mintHandler}>Mint</button>
             <br/>
-            <p>enabledStarIds: {enabledStarIds}</p>
+            <p>owned Star Ids: {arrayToString(ownedStarIds)}</p>
+            <p>mint enabled StarIds: {arrayToString(enabledStarIds)}</p>
         </div>
     )
 }
