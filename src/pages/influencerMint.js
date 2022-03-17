@@ -15,6 +15,7 @@ function InfluencerMint(props) {
         if(props.currentAccount != undefined)
             nftAction.influencerMint(props.currentAccount, amount)
     }
+    
     return(
         <div>
             Influencer : <input value={amount} onChange={inputHandler}></input>

@@ -17,7 +17,6 @@ function NavBar() {
                 <li>
                     <Link to="/whitelist">whitelist</Link>
                 </li>
-                
             </ul>
         </div>
     )

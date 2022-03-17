@@ -134,7 +134,6 @@ contract GoodNft is ERC721A, Ownable{
 		return (minter == star.ownerOf(id));
 	}
 
-
 	function setMintStage(uint256 stage_) public onlyOwner {
 		require(stage_ < 4, "setMintStage : The stage can not be greater than 4.");
 		mintStage = stage_;
